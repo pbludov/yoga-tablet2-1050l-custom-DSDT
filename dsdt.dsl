@@ -2974,7 +2974,7 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "INTEL ", "EDK2    ", 0x00000003)
                 Name (_CID, "ADMA0F28" /* Intel Audio DMA */)  // _CID: Compatible ID
                 Name (_DDN, "Intel(R) Audio  DMA0 - DMA0F28")  // _DDN: DOS Device Name
                 Name (_UID, One)  // _UID: Unique ID
-                Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
+                Method (_CRS, 0, Serialized)  // _CRS: Current Resource Settings
                 {
                     Name (RBUF, ResourceTemplate ()
                     {
@@ -3010,7 +3010,7 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "INTEL ", "EDK2    ", 0x00000003)
                     Return (Zero)
                 }
 
-                Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
+                Method (_CRS, 0, Serialized)  // _CRS: Current Resource Settings
                 {
                     Name (RBUF, ResourceTemplate ()
                     {
@@ -3096,7 +3096,7 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "INTEL ", "EDK2    ", 0x00000003)
                     Return (Zero)
                 }
 
-                Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
+                Method (_CRS, 0, Serialized)  // _CRS: Current Resource Settings
                 {
                     Name (RBUF, ResourceTemplate ()
                     {
@@ -3170,7 +3170,7 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "INTEL ", "EDK2    ", 0x00000003)
             Name (_CID, "VIB8601")  // _CID: Compatible ID
             Name (_DDN, "Intel(R) Vibra Driver - VIB8601")  // _DDN: DOS Device Name
             Name (_UID, One)  // _UID: Unique ID
-            Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
+            Method (_CRS, 0, Serialized)  // _CRS: Current Resource Settings
             {
                 Name (RBUF, ResourceTemplate ()
                 {
@@ -3207,7 +3207,7 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "INTEL ", "EDK2    ", 0x00000003)
                 GPO2, 
                 ^I2C2.RTEK
             })
-            Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
+            Method (_CRS, 0, Serialized)  // _CRS: Current Resource Settings
             {
                 Name (RBUF, ResourceTemplate ()
                 {
@@ -3241,7 +3241,7 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "INTEL ", "EDK2    ", 0x00000003)
             Name (_CID, "HAD0F28" /* Intel HDMI Audio Driver */)  // _CID: Compatible ID
             Name (_DDN, "Intel(R) HDMI Audio Driver - HAD")  // _DDN: DOS Device Name
             Name (_UID, One)  // _UID: Unique ID
-            Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
+            Method (_CRS, 0, Serialized)  // _CRS: Current Resource Settings
             {
                 Name (RBUF, ResourceTemplate ()
                 {
@@ -5269,11 +5269,9 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "INTEL ", "EDK2    ", 0x00000003)
                 PMES,   1
             }
 
-            Method (_DSW, 3, NotSerialized)  // _DSW: Device Sleep Wake
-            {
-            }
+            Method (_DSW, 3, NotSerialized) {} // _DSW: Device Sleep Wake
 
-            Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
+            Method (_CRS, 0, Serialized)  // _CRS: Current Resource Settings
             {
                 Name (RBUF, ResourceTemplate ()
                 {
@@ -5282,14 +5280,11 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "INTEL ", "EDK2    ", 0x00000003)
                         0x01000000,         // Address Length
                         )
                 })
-                If ((PAVP == 0x02))
-                {
+                If (PAVP == 0x02) {
                     Return (RBUF) /* \_SB_.PCI0.SEC0._CRS.RBUF */
                 }
 
-                Return (ResourceTemplate ()
-                {
-                })
+                Return (ResourceTemplate () {})
             }
         }
     }
@@ -5315,7 +5310,7 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "INTEL ", "EDK2    ", 0x00000003)
                 DSEN = (Arg0 & 0x07)
             }
 
-            Method (_DOD, 0, NotSerialized)  // _DOD: Display Output Devices
+            Method (_DOD, 0, Serialized)  // _DOD: Display Output Devices
             {
                 NDID = Zero
                 If ((DIDL != Zero))
@@ -7230,7 +7225,7 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "INTEL ", "EDK2    ", 0x00000003)
                 }
             }
 
-            Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
+            Method (_CRS, 0, Serialized)  // _CRS: Current Resource Settings
             {
                 Name (RBUF, ResourceTemplate ()
                 {
@@ -7247,7 +7242,7 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "INTEL ", "EDK2    ", 0x00000003)
                 Return (0x0F)
             }
 
-            Method (_AEI, 0, NotSerialized)  // _AEI: ACPI Event Interrupts
+            Method (_AEI, 0, Serialized)  // _AEI: ACPI Event Interrupts
             {
                 Name (RBUF, ResourceTemplate ()
                 {
@@ -7371,7 +7366,7 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "INTEL ", "EDK2    ", 0x00000003)
             Name (_CID, "INT33FC" /* Intel Baytrail GPIO Controller */)  // _CID: Compatible ID
             Name (_DDN, "ValleyView General Purpose Input/Output (GPIO) controller")  // _DDN: DOS Device Name
             Name (_UID, One)  // _UID: Unique ID
-            Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
+            Method (_CRS, 0, Serialized)  // _CRS: Current Resource Settings
             {
                 Name (RBUF, ResourceTemplate ()
                 {
@@ -7441,7 +7436,7 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "INTEL ", "EDK2    ", 0x00000003)
             Name (_CID, "INT33FC" /* Intel Baytrail GPIO Controller */)  // _CID: Compatible ID
             Name (_DDN, "ValleyView GPNCORE controller")  // _DDN: DOS Device Name
             Name (_UID, 0x02)  // _UID: Unique ID
-            Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
+            Method (_CRS, 0, Serialized)  // _CRS: Current Resource Settings
             {
                 Name (RBUF, ResourceTemplate ()
                 {
@@ -7470,7 +7465,7 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "INTEL ", "EDK2    ", 0x00000003)
             Name (_CID, "INT33FC" /* Intel Baytrail GPIO Controller */)  // _CID: Compatible ID
             Name (_DDN, "ValleyView GPSUS controller")  // _DDN: DOS Device Name
             Name (_UID, 0x03)  // _UID: Unique ID
-            Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
+            Method (_CRS, 0, Serialized)  // _CRS: Current Resource Settings
             {
                 Name (RBUF, ResourceTemplate ()
                 {
@@ -8583,7 +8578,7 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "INTEL ", "EDK2    ", 0x00000003)
                 })
                 Name (_S4W, 0x02)  // _S4W: S4 Device Wake State
                 Name (_S0W, 0x02)  // _S0W: S0 Device Wake State
-                Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
+                Method (_CRS, 0, Serialized)  // _CRS: Current Resource Settings
                 {
                     Name (RBUF, ResourceTemplate ()
                     {
@@ -8635,7 +8630,7 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "INTEL ", "EDK2    ", 0x00000003)
                     Return (Zero)
                 }
 
-                Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
+                Method (_CRS, 0, Serialized)  // _CRS: Current Resource Settings
                 {
                     Name (NAM, Buffer (0x0F)
                     {
@@ -8686,7 +8681,7 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "INTEL ", "EDK2    ", 0x00000003)
                 })
                 Name (_S4W, 0x02)  // _S4W: S4 Device Wake State
                 Name (_S0W, 0x02)  // _S0W: S0 Device Wake State
-                Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
+                Method (_CRS, 0, Serialized)  // _CRS: Current Resource Settings
                 {
                     Name (RBUF, ResourceTemplate ()
                     {
@@ -9117,7 +9112,7 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "INTEL ", "EDK2    ", 0x00000003)
                     Return (0x0F)
                 }
 
-                Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
+                Method (_CRS, 0, Serialized)  // _CRS: Current Resource Settings
                 {
                     Name (UBUF, ResourceTemplate ()
                     {
@@ -9183,7 +9178,7 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "INTEL ", "EDK2    ", 0x00000003)
             {
                 Name (_HID, "BCM2E1A")  // _HID: Hardware ID
                 Name (UART, Zero)
-                Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
+                Method (_CRS, 0, Serialized)  // _CRS: Current Resource Settings
                 {
                     Name (UBUF, ResourceTemplate ()
                     {
@@ -9340,7 +9335,7 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "INTEL ", "EDK2    ", 0x00000003)
                 Name (_HID, "BCM4752")  // _HID: Hardware ID
                 Name (UART, One)
                 Name (ENAB, Zero)
-                Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
+                Method (_CRS, 0, Serialized)  // _CRS: Current Resource Settings
                 {
                     Name (UBUF, ResourceTemplate ()
                     {
@@ -9437,7 +9432,7 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "INTEL ", "EDK2    ", 0x00000003)
             {
                 Name (_HID, "AUTH2750" /* AuthenTec AES2750 */)  // _HID: Hardware ID
                 Name (_DDN, "AuthenTec AES2750")  // _DDN: DOS Device Name
-                Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
+                Method (_CRS, 0, Serialized)  // _CRS: Current Resource Settings
                 {
                     Name (UBUF, ResourceTemplate ()
                     {
@@ -9621,7 +9616,7 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "INTEL ", "EDK2    ", 0x00000003)
                 Name (_CID, "10WM5102")  // _CID: Compatible ID
                 Name (_DDN, "RTEK Codec Controller ")  // _DDN: DOS Device Name
                 Name (_UID, One)  // _UID: Unique ID
-                Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
+                Method (_CRS, 0, Serialized)  // _CRS: Current Resource Settings
                 {
                     Name (SBUF, ResourceTemplate ()
                     {
@@ -10061,7 +10056,7 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "INTEL ", "EDK2    ", 0x00000003)
                     Sleep (0x78)
                 }
 
-                Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
+                Method (_CRS, 0, Serialized)  // _CRS: Current Resource Settings
                 {
                     Name (RBUF, ResourceTemplate ()
                     {
@@ -10248,7 +10243,7 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "INTEL ", "EDK2    ", 0x00000003)
                 {
                     I2C7
                 })
-                Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
+                Method (_CRS, 0, Serialized)  // _CRS: Current Resource Settings
                 {
                     Name (SBUF, ResourceTemplate ()
                     {
@@ -10908,7 +10903,7 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "INTEL ", "EDK2    ", 0x00000003)
                     Return (Zero)
                 }
 
-                Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
+                Method (_CRS, 0, Serialized)  // _CRS: Current Resource Settings
                 {
                     Name (SBUF, ResourceTemplate ()
                     {
@@ -10937,7 +10932,7 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "INTEL ", "EDK2    ", 0x00000003)
                     Return (Zero)
                 }
 
-                Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
+                Method (_CRS, 0, Serialized)  // _CRS: Current Resource Settings
                 {
                     Name (SBUF, ResourceTemplate ()
                     {
@@ -10966,7 +10961,7 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "INTEL ", "EDK2    ", 0x00000003)
                     Return (Zero)
                 }
 
-                Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
+                Method (_CRS, 0, Serialized)  // _CRS: Current Resource Settings
                 {
                     Name (SBUF, ResourceTemplate ()
                     {
@@ -11088,7 +11083,7 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "INTEL ", "EDK2    ", 0x00000003)
                 I2C7, 
                 ^I2C7.PMIC
             })
-            Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
+            Method (_CRS, 0, Serialized)  // _CRS: Current Resource Settings
             {
                 Name (RBUF, ResourceTemplate ()
                 {
@@ -11333,7 +11328,7 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "INTEL ", "EDK2    ", 0x00000003)
             Return (Zero)
         }
 
-        Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
+        Method (_CRS, 0, Serialized)  // _CRS: Current Resource Settings
         {
             Name (UBUF, ResourceTemplate ()
             {
@@ -11594,7 +11589,7 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "INTEL ", "EDK2    ", 0x00000003)
                 Return (Zero)
             }
 
-            Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
+            Method (_CRS, 0, Serialized)  // _CRS: Current Resource Settings
             {
                 Name (RBUF, ResourceTemplate ()
                 {
@@ -11655,7 +11650,7 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "INTEL ", "EDK2    ", 0x00000003)
                 Return (Zero)
             }
 
-            Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
+            Method (_CRS, 0, Serialized)  // _CRS: Current Resource Settings
             {
                 Name (RBUF, ResourceTemplate ()
                 {
@@ -11716,7 +11711,7 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "INTEL ", "EDK2    ", 0x00000003)
                 Return (Zero)
             }
 
-            Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
+            Method (_CRS, 0, Serialized)  // _CRS: Current Resource Settings
             {
                 Name (RBUF, ResourceTemplate ()
                 {
@@ -11777,7 +11772,7 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "INTEL ", "EDK2    ", 0x00000003)
                 Return (Zero)
             }
 
-            Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
+            Method (_CRS, 0, Serialized)  // _CRS: Current Resource Settings
             {
                 Name (RBUF, ResourceTemplate ()
                 {
@@ -11841,7 +11836,7 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "INTEL ", "EDK2    ", 0x00000003)
                 Return (Zero)
             }
 
-            Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
+            Method (_CRS, 0, Serialized)  // _CRS: Current Resource Settings
             {
                 Name (RBUF, ResourceTemplate ()
                 {
