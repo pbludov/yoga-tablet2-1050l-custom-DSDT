@@ -10022,7 +10022,7 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "INTEL ", "EDK2    ", 0x00000003)
             Device (TCS0)
             {
                 Name (_ADR, Zero)  // _ADR: Address
-                Name (_HID, "ATML1000" /* Atmel Touchscreen Controller */)  // _HID: Hardware ID
+                Name (_HID, "SYNA0001")  // _HID: Hardware ID
                 Name (_CID, "PNP0C50" /* HID Protocol Device (I2C bus) */)  // _CID: Compatible ID
                 Name (_S0W, Zero)  // _S0W: S0 Device Wake State
                 Name (_DEP, Package (0x02)  // _DEP: Dependencies
@@ -10064,7 +10064,7 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "INTEL ", "EDK2    ", 0x00000003)
                 {
                     Name (RBUF, ResourceTemplate ()
                     {
-                        I2cSerialBus (0x004A, ControllerInitiated, 0x0019F0A0,
+                        I2cSerialBus (0x0038, ControllerInitiated, 400000,
                             AddressingMode7Bit, "\\_SB.I2C6",
                             0x00, ResourceConsumer, ,
                             )
@@ -10079,61 +10079,7 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "INTEL ", "EDK2    ", 0x00000003)
                                 0x003C
                             }
                     })
-                    Name (PBUF, ResourceTemplate ()
-                    {
-                        I2cSerialBus (0x004B, ControllerInitiated, 0x00061A80,
-                            AddressingMode7Bit, "\\_SB.I2C6",
-                            0x00, ResourceConsumer, ,
-                            )
-                        Interrupt (ResourceConsumer, Level, ActiveHigh, Exclusive, ,, )
-                        {
-                            0x00000045,
-                        }
-                        GpioIo (Exclusive, PullDefault, 0x0000, 0x0000, IoRestrictionOutputOnly,
-                            "\\_SB.GPO0", 0x00, ResourceConsumer, ,
-                            )
-                            {   // Pin list
-                                0x003C
-                            }
-                    })
-                    Name (ABUF, ResourceTemplate ()
-                    {
-                        I2cSerialBus (0x0020, ControllerInitiated, 0x0019F0A0,
-                            AddressingMode7Bit, "\\_SB.I2C6",
-                            0x00, ResourceConsumer, ,
-                            )
-                        Interrupt (ResourceConsumer, Level, ActiveHigh, Exclusive, ,, )
-                        {
-                            0x00000045,
-                        }
-                        GpioIo (Exclusive, PullDefault, 0x0000, 0x0000, IoRestrictionOutputOnly,
-                            "\\_SB.GPO0", 0x00, ResourceConsumer, ,
-                            )
-                            {   // Pin list
-                                0x003C
-                            }
-                        GpioIo (Exclusive, PullDefault, 0x0000, 0x0000, IoRestrictionOutputOnly,
-                            "\\_SB.I2C7.PMIC", 0x00, ResourceConsumer, ,
-                            )
-                            {   // Pin list
-                                0x000B
-                            }
-                    })
-                    If ((ITSA == 0x4B))
-                    {
-                        Return (PBUF) /* \_SB_.I2C6.TCS0._CRS.PBUF */
-                    }
-                    Else
-                    {
-                        If (((BDID == 0x03) && (OSSL == One)))
-                        {
-                            Return (ABUF) /* \_SB_.I2C6.TCS0._CRS.ABUF */
-                        }
-                        Else
-                        {
-                            Return (RBUF) /* \_SB_.I2C6.TCS0._CRS.RBUF */
-                        }
-                    }
+                    Return (RBUF) /* \_SB_.I2C6.TCS0._CRS.RBUF */
                 }
 
                 Method (_DSM, 4, Serialized)  // _DSM: Device-Specific Method
@@ -10149,7 +10095,7 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "INTEL ", "EDK2    ", 0x00000003)
                             }
                             Case (One) {
                                 Debug = "Method _DSM Function HID"
-                                Return (Zero) // 0x32 in win version
+                                Return (0x20) // Zero in Android version
                             }
                         }
                         Return (Zero)
