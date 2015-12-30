@@ -6632,15 +6632,12 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "INTEL ", "EDK2    ", 0x00000003)
 
                 CEVT = Arg0
                 CSTS = 0x03
-                If (((CHPD == Zero) && (Arg1 == Zero)))
+                If (CHPD == Zero && Arg1 == Zero)
                 {
-                    If (((OSYS > 0x07D0) || (OSYS < 0x07D6)))
-                    {
-                        Notify (PCI0, Arg1)
-                    }
-                    Else
-                    {
-                        Notify (GFX0, Arg1)
+                    If (OSYS < 2006) {
+                        Notify (PCI0, Arg1) // older then Windows Vista
+                    } Else {
+                        Notify (GFX0, Arg1) // Windows Vista or newver
                     }
                 }
 
@@ -6979,31 +6976,21 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "INTEL ", "EDK2    ", 0x00000003)
 
         If (((Arg0 == 0x03) || (Arg0 == 0x04)))
         {
-            If ((PFLV == FMBL))
-            {
-                If ((Arg0 == 0x04))
-                {
-                    PNOT ()
-                }
+            If (PFLV == FMBL && Arg0 == 0x04) {
+                PNOT ()
             }
 
-            If ((CFGD & 0x01000000)) {}
-            If ((OSYS == 0x07D2))
-            {
-                If ((CFGD & One))
-                {
-                    If ((\_PR.CPU0._PPC > Zero))
-                    {
-                        \_PR.CPU0._PPC -= One
+            If (OSYS == 2002 /* Windows XP SP2 */) {
+                If ((CFGD & One)) {
+                    If (\_PR.CPU0._PPC > Zero) {
+                        \_PR.CPU0._PPC --
                         PNOT ()
-                        \_PR.CPU0._PPC += One
+                        \_PR.CPU0._PPC ++
                         PNOT ()
-                    }
-                    Else
-                    {
-                        \_PR.CPU0._PPC += One
+                    } Else {
+                        \_PR.CPU0._PPC ++
                         PNOT ()
-                        \_PR.CPU0._PPC -= One
+                        \_PR.CPU0._PPC --
                         PNOT ()
                     }
                 }
@@ -7137,44 +7124,37 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "INTEL ", "EDK2    ", 0x00000003)
 
         Scope (PCI0)
         {
-            Method (_INI, 0, NotSerialized)  // _INI: Initialize
-            {
-                OSYS = 0x07D0
+            Method (_INI, 0, NotSerialized) { // _INI: Initialize
+
+                OSYS = 2000 // Windows 2000
                 If (CondRefOf (\_OSI, Local0))
                 {
-                    If (_OSI ("Windows 2001"))
-                    {
-                        OSYS = 0x07D1
+                    If (_OSI ("Windows 2001")) {
+                        OSYS = 2001 // Windows XP
                     }
 
-                    If (_OSI ("Windows 2001 SP1"))
-                    {
-                        OSYS = 0x07D1
+                    If (_OSI ("Windows 2001 SP1")) {
+                        OSYS = 2001 // Windows 2001 SP1
                     }
 
-                    If (_OSI ("Windows 2001 SP2"))
-                    {
-                        OSYS = 0x07D2
+                    If (_OSI ("Windows 2001 SP2")) {
+                        OSYS = 2002 // Windows XP SP2
                     }
 
-                    If (_OSI ("Windows 2006"))
-                    {
-                        OSYS = 0x07D6
+                    If (_OSI ("Windows 2006")) {
+                        OSYS = 2006 // Windows Vista
                     }
 
-                    If (_OSI ("Windows 2009"))
-                    {
-                        OSYS = 0x07D9
+                    If (_OSI ("Windows 2009")) {
+                        OSYS = 2009 // Windows 7 and Server 2008 R2
                     }
 
-                    If (_OSI ("Windows 2012"))
-                    {
-                        OSYS = 0x07DC
+                    If (_OSI ("Windows 2012")) {
+                        OSYS = 2012 // Windows 8 and Server 2012
                     }
 
-                    If (_OSI ("Windows 2013"))
-                    {
-                        OSYS = 0x07DD
+                    If (_OSI ("Windows 2013")) {
+                        OSYS = 2013 // Windows 8.1 and Server 2012 R2
                     }
                 }
             }
@@ -11209,11 +11189,11 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "INTEL ", "EDK2    ", 0x00000003)
 
             Method (_DSM, 4, Serialized)  // _DSM: Device-Specific Method
             {
-                If ((OSYS == 0x07DD)) {
-                    ^^I2C7.PMIC.FCOT = One
+                If (OSYS >= 2013) {
+                    ^^I2C7.PMIC.FCOT = One // Windows 8.1 and Server 2012 R2
                 }
                 Else {
-                    ^^I2C7.PMIC.FCOT = Zero
+                    ^^I2C7.PMIC.FCOT = Zero // Windows 8 or older || Windows 10 or newver
                 }
 
                 If ((Arg0 == ToUUID ("dfbcf3c5-e7a5-44e6-9c1f-29c76f6e059c") /* Power Button Device */)) {
