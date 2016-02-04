@@ -9940,6 +9940,25 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "INTEL ", "EDK2    ", 0x00000003)
               FixedDMA (0x001A, 0x0002, Width32bit, )
               FixedDMA (0x001B, 0x0003, Width32bit, )
           })
+
+          Method (SSCN, 0, Serialized)
+          {
+              Name (PKG, Package (0x03) { 0x214, 0x272, 0x06 })
+              Return (PKG) /* \_SB_.I2C6.SSCN.PKG_ */
+          }
+
+          Method (FMCN, 0, Serialized)
+          {
+              Name (PKG, Package (0x03) { 0x50, 0xAD, 0x06})
+              Return (PKG) /* \_SB_.I2C6.FMCN.PKG_ */
+          }
+
+          Method (FPCN, 0, NotSerialized)
+          {
+              Name (PKG, Package (0x03) { 0x1B, 0x3A, 0x06 })
+              Return (PKG) /* \_SB_.I2C6.FPCN.PKG_ */
+          }
+
           Method (_HRV, 0, NotSerialized)  // _HRV: Hardware Revision
           {
               Return (SOCS) /* \SOCS */
