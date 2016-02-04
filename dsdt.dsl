@@ -4288,6 +4288,18 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "INTEL ", "EDK2    ", 0x00000003)
                   Return (Zero)
               }
           }
+
+          Method (_CRS, 0, Serialized)  // _CRS: Current Resource Settings
+          {
+            Name (RBUF, ResourceTemplate ()
+            {
+              GpioIo (Exclusive, PullDefault, 0, 0, IoRestrictionOutputOnly,
+                  "\\_SB.GPO2", 0x00, ResourceConsumer, , ) { 14 }
+              GpioIo (Exclusive, PullDefault, 0, 0, IoRestrictionOutputOnly,
+                  "\\_SB.GPO0", 0x00, ResourceConsumer, , ) { 54 }
+            })
+            Return (RBUF)
+          }
       }
 
       Device (GLAN)
