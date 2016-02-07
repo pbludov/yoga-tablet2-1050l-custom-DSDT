@@ -11075,89 +11075,34 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "INTEL ", "EDK2    ", 0x00000003)
                   GpioInt (Edge, ActiveBoth, ExclusiveAndWake, PullDefault, 0x0000,
                       "\\_SB.GPO2", 0x00, ResourceConsumer, ,
                       )
-                      {   // Pin list
+                      {   // Power
                           0x0010
                       }
                   GpioInt (Edge, ActiveBoth, ExclusiveAndWake, PullDefault, 0x0000,
                       "\\_SB.GPO0", 0x00, ResourceConsumer, ,
                       )
-                      {   // Pin list
+                      {   // Home
                           0x0006
                       }
                   GpioInt (Edge, ActiveBoth, Exclusive, PullDefault, 0x0000,
                       "\\_SB.I2C7.PMIC", 0x00, ResourceConsumer, ,
                       )
-                      {   // Pin list
+                      {   // VolumeUp
                           0x0000
                       }
                   GpioInt (Edge, ActiveBoth, Exclusive, PullDefault, 0x0000,
                       "\\_SB.I2C7.PMIC", 0x00, ResourceConsumer, ,
                       )
-                      {   // Pin list
+                      {   // VolumeDown
                           0x0001
                       }
                   GpioInt (Edge, ActiveBoth, Exclusive, PullDefault, 0x0000,
                       "\\_SB.I2C7.PMIC", 0x00, ResourceConsumer, ,
                       )
-                      {   // Pin list
+                      {   // RotationLock
                           0x0007
                       }
               })
-              Name (PBUF, ResourceTemplate ()
-              {
-                  GpioInt (Edge, ActiveBoth, ExclusiveAndWake, PullDefault, 0x0000,
-                      "\\_SB.GPO2", 0x00, ResourceConsumer, ,
-                      )
-                      {   // Pin list
-                          0x0010
-                      }
-                  GpioInt (Edge, ActiveBoth, ExclusiveAndWake, PullDefault, 0x0000,
-                      "\\_SB.GPO0", 0x00, ResourceConsumer, ,
-                      )
-                      {   // Pin list
-                          0x0006
-                      }
-                  GpioInt (Edge, ActiveBoth, Exclusive, PullDefault, 0x0000,
-                      "\\_SB.GPO0", 0x00, ResourceConsumer, ,
-                      )
-                      {   // Pin list
-                          0x0005
-                      }
-                  GpioInt (Edge, ActiveBoth, Exclusive, PullDefault, 0x0000,
-                      "\\_SB.GPO0", 0x00, ResourceConsumer, ,
-                      )
-                      {   // Pin list
-                          0x0004
-                      }
-                  GpioInt (Edge, ActiveBoth, Exclusive, PullDefault, 0x0000,
-                      "\\_SB.GPO0", 0x00, ResourceConsumer, ,
-                      )
-                      {   // Pin list
-                          0x0002
-                      }
-              })
-              If ((BDID == 0x04))
-              {
-                  If ((FBID == 0x02))
-                  {
-                      Return (PBUF) /* \_SB_.TBAD._CRS.PBUF */
-                  }
-
-                  If ((FBID == 0x03))
-                  {
-                      Return (PBUF) /* \_SB_.TBAD._CRS.PBUF */
-                  }
-              }
-              Else
-              {
-                  If ((BDID == 0x02))
-                  {
-                      If ((FBID == 0x02))
-                      {
-                          Return (PBUF) /* \_SB_.TBAD._CRS.PBUF */
-                      }
-                  }
-              }
 
               Return (RBUF) /* \_SB_.TBAD._CRS.RBUF */
           }
